@@ -39,22 +39,30 @@
 
   ];
 
-  var_dump($_GET["searchPark"]);
-
-  $searchPark = $_GET["searchPark"] === "on"  ? true : false;
+  $searchPark = isset($_GET["searchPark"]) && $_GET["searchPark"] === "on"  ? true : false;
   var_dump($searchPark);
 
   // se il searchPark è abilitato modifico il mio array hotels
   if ($searchPark) {
     foreach($hotels as $key => $value){
       // se ha il parcheggio lo metto nel mio array
-      var_dump($value["parking"]);
       if ($value["parking"]) {
         $newArray[] = $value;
       }
     }
     $hotels = $newArray;
   }
+
+  $searchVote = $_GET["searchVote"];
+  var_dump($searchVote);
+
+  foreach($hotels as $key => $value){
+    // se ha il parcheggio lo metto nel mio array
+    if ($value["vote"] >=  $searchVote) {
+      $newArray[] = $value;
+    }
+  }
+  $hotels = $newArray;
   
 
 ?>
@@ -76,8 +84,25 @@
     <h1>PHP Hotel</h1>
 
     <form action="index.php" method="get">
-      <input type="checkbox" name="searchPark" id="searchPark">
-      <button type="submit">Filtra</button>
+
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="searchPark" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+          with parking
+        </label>
+      </div>
+
+      <label for="inputVote" class="form-label">Vote</label>
+      <select name="searchVote" id="inputVote" class="form-select">
+        <option value=0>0</option>
+        <option value=1>1</option>
+        <option value=2>2</option>
+        <option value=3>3</option>
+        <option value=4>4</option>
+        <option value=5>5</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary">Filtra</button>
     </form>
   
     <table class="table">
