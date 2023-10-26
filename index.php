@@ -53,8 +53,11 @@
     $hotels = $newArray;
   }
 
-  $searchVote = $_GET["searchVote"];
+  $searchVote = isset($_GET["searchVote"]) ? $_GET["searchVote"] : "0";
   var_dump($searchVote);
+
+  // resetto il mio array temporaneo
+  $newArray = [];
 
   foreach($hotels as $key => $value){
     // se ha il parcheggio lo metto nel mio array
