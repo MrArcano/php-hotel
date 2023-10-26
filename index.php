@@ -39,11 +39,8 @@
 
   ];
 
-  $searchPark = isset($_GET["searchPark"]) && $_GET["searchPark"] === "on"  ? true : false;
-  var_dump($searchPark);
-
   // se il searchPark è abilitato modifico il mio array hotels
-  if ($searchPark) {
+  if (isset($_GET["searchPark"])) {
     foreach($hotels as $key => $value){
       // se ha il parcheggio lo metto nel mio array
       if ($value["parking"]) {
@@ -54,13 +51,12 @@
   }
 
   $searchVote = isset($_GET["searchVote"]) ? $_GET["searchVote"] : "0";
-  var_dump($searchVote);
 
   // resetto il mio array temporaneo
   $newArray = [];
 
   foreach($hotels as $key => $value){
-    // se ha il parcheggio lo metto nel mio array
+    // se ha un voto maggiore o uguale al mio searchVote
     if ($value["vote"] >=  $searchVote) {
       $newArray[] = $value;
     }
@@ -86,26 +82,28 @@
     
     <h1>PHP Hotel</h1>
 
-    <form action="index.php" method="get">
-
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="searchPark" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-          with parking
-        </label>
+    <form class="my-3 p-2 m-auto border border-2  rounded-4 " action="index.php" method="get">
+      <div class="row">
+        
+        <div class="col-auto d-flex  align-items-center">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="searchPark" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+              with parking
+            </label>
+          </div>
+        </div>
+        
+        <div class="col-auto d-flex align-items-center">
+          <label for="inputVote" class="form-label m-0 me-2">Vote</label>
+          <input type="number" name="searchVote" id="inputVote">
+        </div>
+        
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Filtra</button>
+        </div>
       </div>
 
-      <label for="inputVote" class="form-label">Vote</label>
-      <select name="searchVote" id="inputVote" class="form-select">
-        <option value=0>0</option>
-        <option value=1>1</option>
-        <option value=2>2</option>
-        <option value=3>3</option>
-        <option value=4>4</option>
-        <option value=5>5</option>
-      </select>
-
-      <button type="submit" class="btn btn-primary">Filtra</button>
     </form>
   
     <table class="table">
