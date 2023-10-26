@@ -39,6 +39,24 @@
 
   ];
 
+  var_dump($_GET["searchPark"]);
+
+  $searchPark = $_GET["searchPark"] === "on"  ? true : false;
+  var_dump($searchPark);
+
+  // se il searchPark è abilitato modifico il mio array hotels
+  if ($searchPark) {
+    foreach($hotels as $key => $value){
+      // se ha il parcheggio lo metto nel mio array
+      var_dump($value["parking"]);
+      if ($value["parking"]) {
+        $newArray[] = $value;
+      }
+    }
+    $hotels = $newArray;
+  }
+  
+
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +74,11 @@
   <div class="container">
     
     <h1>PHP Hotel</h1>
+
+    <form action="index.php" method="get">
+      <input type="checkbox" name="searchPark" id="searchPark">
+      <button type="submit">Filtra</button>
+    </form>
   
     <table class="table">
       <thead>
@@ -68,7 +91,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($hotels as $key => $hotel):?>
+        <?php foreach ($hotels as $hotel):?>
         <tr>
           <td><?php echo $hotel["name"] ?></td>
           <td><?php echo $hotel["description"] ?></td>
